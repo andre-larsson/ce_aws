@@ -1,0 +1,30 @@
+import json
+import boto3
+from boto3.dynamodb.conditions import Key
+
+
+def lambda_handler(event, context):
+    db = boto3.resource('dynamodb')
+    table = db.Table('BirdSightings2')
+    
+    try:
+        bird = event['bird']
+        
+        print(bird)
+        
+        response = response = table.query(
+        KeyConditionExpression=Key('bird').eq(bird))
+        
+        print(response['Items'])
+        
+        return {
+            'statusCode': 200,
+            'data': response['Items'],
+            'body': json.dumps('Successfully retrieved data.')
+        }
+    except:
+        print('Closing lambda function')
+        return {
+                'statusCode': 400,
+                'body': json.dumps('Error retrieving data.')
+        }

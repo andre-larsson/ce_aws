@@ -10,12 +10,12 @@ def lambda_handler(event, context):
     try:
         bird = event['bird']
         
-        print(bird)
+        #print(bird)
         
         response = response = table.query(
         KeyConditionExpression=Key('bird').eq(bird))
         
-        print(response['Items'])
+        #print(response['Items'])
         
         return {
             'statusCode': 200,
